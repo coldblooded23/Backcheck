@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="https://www.w3.org/1999/xhtml"
+	xmlns:th="https://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head th:replace="common/header :: commonheader">
+</head>
+
+<body>
+
+	<div th:replace="common/header :: commonDateandCollerPickerCss"></div>
+	<!--*******************
+        Preloader start
+    ********************-->
+	<div th:replace="common/header :: commonPreloader"></div>
+	<!--*******************
+        Preloader end
+    ********************-->
+
+
+	<!--**********************************
+        Main wrapper start
+    ***********************************-->
+	<div id="main-wrapper">
+
+		<!--**********************************
+            Nav header start
+        ***********************************-->
+		<div th:replace="common/header :: commonNavHeader"></div>
+		<!--**********************************
+            Nav header end
+        ***********************************-->
+
+		<!--**********************************
+            Header start
+        ***********************************-->
+		<div th:replace="common/header :: commonTopNav"></div>
+		<!--**********************************
+            Header end ti-comment-alt
+        ***********************************-->
+
+		<!--**********************************
+            Sidebar start
+        ***********************************-->
+		<div th:replace="common/header :: commonsidenav"></div>
+		<!--**********************************
+            Sidebar end
+        ***********************************-->
+
+
+        <!--**********************************
+            Content body start
+        ***********************************-->
+        <div class="content-body">
+        
+        
+		<div class="alert alert-danger" role="alert" th:if="${updatefailed == 'failed'}"> <span th:text="${message}"></span></div>
+
+
+			<div class="container-fluid">
+				<div class="card">
+					<div class="card-body">
+						<div class="form-validation">
+							<form id="candidateForm"
+								th:action="@{/candidate/updateCandidate}"
+								th:object="${candidate}" method="post">
+								<div class="form-group row">
+									<input type="hidden" class="form-control" id="customerId"
+										name="customerId" th:field="*{customerId}"> <input
+										type="hidden" class="form-control" id="candidateId"
+										name="candidateId" th:field="*{candidateId}"> <label
+										class="col-lg-4 col-form-label" for="email">Email <span
+										class="text-danger">*</span>
+									</label>
+									<div class="col-lg-6">
+										<input type="email" class="form-control" id="email"
+											name="email" th:field="*{email}" placeholder="Email"
+											required="required">
+										<div class="errors1" id="errors1"
+											style="display: none; color: red">Please enter valid
+											email id</div>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label class="col-lg-4 col-form-label" for="firstName">First
+										Name <span class="text-danger">*</span>
+									</label>
+									<div class="col-lg-6">
+										<input type="text" class="form-control" id="firstName"
+											name="firstName" th:field="*{firstName}"
+											placeholder="First Name" maxlength="50"
+											oninput="this.value = this.value.replace(/[^a-zA-Z.]/g, '').replace(/(\..*?)\..*/g, '$1');"
+											required="required">
+									</div>
+								</div>
+								<div class="form-group row">
+									<label class="col-lg-4 col-form-label" for="lastName">Last
+										Name <span class="text-danger">*</span>
+									</label>
+									<div class="col-lg-6">
+										<input type="text" class="form-control" id="lastName"
+											name="lastName" th:field="*{lastName}"
+											placeholder="last Name" maxlength="50"
+											oninput="this.value = this.value.replace(/[^a-zA-Z.]/g, '').replace(/(\..*?)\..*/g, '$1');"
+											required="required">
+									</div>
+								</div>
+								<div class="form-group row">
+									<label class="col-lg-4 col-form-label" for="phone">Contact
+										Number <span class="text-danger">*</span>
+									</label>
+									<div class="col-lg-6">
+										<input type="text" class="form-control" id="phone"
+											name="phone" placeholder="Contact Number" th:field="*{phone}"
+											maxlength="10"
+											oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
+											required="required">
+										<div class="numberErrors" id="numberErrors"
+											style="display: none; color: red">number must contain
+											10 digits</div>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label class="col-lg-4 col-form-label" for="viewDOB">Date
+										Of Birth <span class="text-danger">*</span>
+									</label>
+									<div class="col-lg-6">
+										<input type="text" class="form-control"
+											placeholder="yyyy-mm-dd" id="mdate" th:field="*{mdate}"
+											required="required">
+										<div class="doberror" id="doberror"
+											style="display: none; color: red">Age of the employee
+											must be 21 or above</div>
+									</div>
+								</div>
+
+								<div class="form-group row">
+									<div class="col-lg-6">
+										<button type="submit" class="btn btn-primary"
+											style="float: right;">Update</button>
+									</div>
+									<div class="col-lg-6 ">
+										<a th:href="@{/candidate}" class="btn btn-danger">Cancel</a>
+									</div>
+								</div>
+
+							</form>
+						</div>
+					</div>
+				</div>
+
+			</div>
+
+
+
+
+		</div>
+            <!-- #/ container -->
+        </div>
+        <!--**********************************
+            Content body end
+        ***********************************-->
+   
+
+		<!--**********************************
+          Script Starts
+        ***********************************-->
+        <script type="text/javascript">
+        const from =document.getElementById("candidateForm");
+        const Number =document.getElementById("phone"); 
+        
+        from.addEventListener('submit',(e)=>{
+        let meassage=[];
+       	let email1=emailValidate();
+     	let vdate=validateDate();
+     	
+   	 	  if(email1==false){
+		  meassage.push("enter valid email"); 
+		  }else{  
+		  document.getElementById("errors1").style.display='none'; 
+		  } 
+		 
+		  	
+ 		  if(vdate==false){
+ 		  meassage.push("age of the employee must be 21 or above"); 
+ 		  }else{  
+ 		  document.getElementById("doberror").style.display='none'; 
+ 		  }
+ 		  
+    	  if(Number.value.trim().length<10){
+       	  meassage.push("enter valid number"); 
+       	  document.getElementById("numberErrors").style.display='block'; 
+       	  }else{
+       	  document.getElementById("numberErrors").style.display='none';   
+       	  }
+    	  
+       		 if(meassage.length>0){
+			  e.preventDefault();
+			  }
+		        
+        
+        });
+        
+        
+        function validateDate(){
+          	 var dob=document.getElementById("mdate").value;	
+          	 var dob1=dob.split('-');
+          	 var today = new Date();
+          	 var yyyy = today.getFullYear();
+          	 var dd = String(today.getDate()).padStart(2, '0');
+          	 var mm = String(today.getMonth() + 1).padStart(2, '0');
+          	 var age=yyyy-dob1[0];
+          	 var month=mm-dob1[1];
+               if (month < 0 || (month=== 0 && dd < dob1[2])) {
+                   age--;
+               }
+               if(age<21){
+              	 document.getElementById("doberror").style.display='block'; 
+          	return false;
+               }else {
+              	 return true;
+               }
+          }
+           
+           function emailValidate(){
+                  var emailRE6=/^([\w\-\.]+)@((\[([0-9]{1,3}\.){3}[0-9]{1,3}\])|(([\w\-]+\.)+)([a-zA-Z]{2,4}))$/;
+             	  
+             	 if(email.value.match(emailRE6)){
+           			  return true;  
+           		  }else{	
+           			 document.getElementById("errors1").style.display='block'; 
+           			 return false;
+           			 
+           		  }
+           }
+        
+           $(function() {
+         	    $('#email').on('keypress', function(e) {
+         	    
+         	        if (e.which == 32||e.which==39){
+         	            return false;
+         	        }
+         	    });
+         	});
+        </script>
+	
+
+		<!--**********************************
+            Footer start
+        ***********************************-->
+
+		<div th:replace="common/header :: commonfooter"></div>
+		<!--**********************************
+            Footer end
+      
+        ***********************************-->
+		<div th:replace="common/header :: commonScript"></div>
+	</div>
+		<div th:replace="common/header :: commonDatetimeAndColorPickerScript"></div>
+	
+	<!--**********************************
+        Main wrapper end
+    ***********************************-->
+
+
+
+
+</body>
+
+</html>

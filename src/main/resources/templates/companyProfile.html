@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html  lang="en"
+xmlns="https://www.w3.org/1999/xhtml"
+	xmlns:th="https://www.thymeleaf.org"  xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head th:replace="common/header :: commonheader">
+</head>
+
+<body>
+
+    <!--*******************
+        Preloader start
+    ********************-->
+    <div th:replace="common/header :: commonPreloader">
+</div>
+    <!--*******************
+        Preloader end
+    ********************-->
+
+    
+    <!--**********************************
+        Main wrapper start
+    ***********************************-->
+    <div id="main-wrapper">
+
+        <!--**********************************
+            Nav header start
+        ***********************************-->
+       <div th:replace="common/header :: commonNavHeader">
+</div>
+        <!--**********************************
+            Nav header end
+        ***********************************-->
+
+        <!--**********************************
+            Header start
+        ***********************************-->
+     <div th:replace="common/header :: commonTopNav"></div>
+        <!--**********************************
+            Header end ti-comment-alt
+        ***********************************-->
+
+        <!--**********************************
+            Sidebar start
+        ***********************************-->
+       <div th:replace="common/header :: commonsidenav"></div>
+        <!--**********************************
+            Sidebar end
+        ***********************************-->
+
+        <!--**********************************
+            Content body start
+        ***********************************-->
+        <div class="content-body">
+
+            <div class="container-fluid mt-3">
+              
+   
+      
+       
+     
+
+       
+     
+     
+      
+            <div class="container-fluid">
+                                           	<div class="alert alert-success" role="alert" th:if="${Successfull == 'success'}">Company profile updated successfully</div>
+					        
+					        	<div class="alert alert-danger" role="alert" th:if="${failed == 'fail'}"> <span th:text="${message}"></span></div>
+               
+                <div class="row justify-content-center">
+                  <div class="col-lg-8">
+                    
+                        <div class="card">
+                        <div id="editButton" ><button style="float: right; margin-right: 30px;margin-top: 20px" type="button" class="btn btn-primary" id="myButton">EDIT</button>
+                    </div>
+            
+                            <div class="card-body">
+                                <div class="form-validation">
+                                    <form id="companyForm" th:action="@{/companyProfile}" method="post">
+                                        <div class="form-group row">
+                                        <input type="hidden" class="form-control" id="customerId" name="customerId"  th:value="${companyProfile.customerId}" >
+                                            <label class="col-lg-4 col-form-label" for="email">Email <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-lg-6">
+                                                <input type="email" class="form-control" id="email" name="email" placeholder="Email"  th:value="${companyProfile.email}" readonly="readonly" required="required">
+                                                              <div class="errors" id="errors" style="display: none;color:red">
+                gmail , hotmail, rediff, yahoo, outlook  email's are not accepted
+                  </div>
+                                                         <div class="errors1" id="errors1" style="display: none;color:red">
+               enter valid email
+                  </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-lg-4 col-form-label" for="companyName">Company Name <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-lg-6">
+                                                <input type="text" class="form-control" id="companyName" name="companyName" placeholder="company name" maxlength="200"  th:value="${companyProfile.companyName}" readonly="readonly" required="required">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-lg-4 col-form-label" for="companyWebsite">Company Website <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-lg-6">
+                                                <input type="text" class="form-control" id="companyWebsite" name="companyWebsite" placeholder="company Website"   th:value="${companyProfile.companyWebsite}" readonly="readonly" required="required">
+                                                                                 <div class="urlError" id="urlError" style="display: none;color:red">
+please enter Valid url for example: https://www.example.com
+                  </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-lg-4 col-form-label" for="contactNumber">Contact Number <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-lg-6">
+                                                <input type="text" class="form-control" id="contactNumber" name="contactNumber" placeholder="Contact Number"  maxlength="10" th:value="${companyProfile.contactNumber}" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" required="required" readonly="readonly">
+                                                                  <div class="numberErrors" id="numberErrors" style="display: none;color:red">
+               number must contain 10 digits
+                  </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-lg-4 col-form-label" for="address">Address <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-lg-6">
+                                                <input class="form-control" id="address" name="address"  placeholder="address" maxlength="200" th:value="${companyProfile.address}" required="required" readonly="readonly">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-lg-4 col-form-label" for="state">State <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-lg-6">
+                                                <input type="text" class="form-control" id="state" name="state"  placeholder="State" maxlength="100" th:value="${companyProfile.state}"  oninput="this.value = this.value.replace(/[^a-zA-Z.]/g, '').replace(/(\..*?)\..*/g, '$1');" required="required" readonly="readonly">
+                                                
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-lg-4 col-form-label" for="country">Country <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-lg-6">
+                                                <input type="text" class="form-control" id="country" name="country" placeholder="country" maxlength="100" th:value="${companyProfile.country}" oninput="this.value = this.value.replace(/[^a-zA-Z.]/g, '').replace(/(\..*?)\..*/g, '$1');" required="required" readonly="readonly">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-lg-4 col-form-label" for="zipCode">Zip Code<span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-lg-6">
+                                                <input type="text" class="form-control" id="zipCode" name="zipCode" placeholder="Zip Code" maxlength="8" th:value="${companyProfile.zipCode}" oninput="this.value = this.value.replace(/[^a-zA-Z0-9 .]/g, '').replace(/(\..*?)\..*/g, '$1');" required="required" readonly="readonly">
+                                                                                    <div class="zipErrors" id="zipErrors" style="display: none;color:red">
+               ZipCode must contain at least 5 digits
+                  </div>
+                                            
+                                            </div>
+                                        </div>
+                                        
+                                        <div id="Submitbutton"  style="display: none;">
+                                        <div  class="form-group row">
+                                            <div class="col-lg-6">
+                                                <button type="submit" class="btn btn-primary" style="float: right;">Submit</button>
+                                            </div>
+                                             <div class="col-lg-6 ">
+                                               <a href="/companyProfile" class="btn btn-danger">Cancel</a>
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                
+            </div>
+            <!-- #/ container -->
+        </div>
+        <!--**********************************
+            Content body end
+        ***********************************-->
+       <script type="text/javascript">    
+        const from =document.getElementById("companyForm");
+        const email =document.getElementById("email");
+        const companyWebsite =document.getElementById("companyWebsite");
+        const companyName =document.getElementById("companyName");
+        const Number =document.getElementById("contactNumber");
+        const Address =document.getElementById("address");
+        const State =document.getElementById("state");
+        const Country =document.getElementById("country");
+        const zipCode =document.getElementById("zipCode");
+        const editButton =document.getElementById("editButton");
+       const Submitbutton=document.getElementById("Submitbutton");
+       const myButton= document.getElementById('myButton');
+      
+        
+       myButton.onclick = function() {
+        	email.removeAttribute('readonly');
+        	companyWebsite.removeAttribute('readonly');
+        	companyName.removeAttribute('readonly');
+        	Number.removeAttribute('readonly');
+        	Address.removeAttribute('readonly');
+        	State.removeAttribute('readonly');
+        	Country.removeAttribute('readonly');
+        	zipCode.removeAttribute('readonly');
+        	editButton.style.display="none";
+        	Submitbutton.style.display="block";
+        };
+        
+        
+        from.addEventListener('submit',(e)=>{
+  		  let meassage=[];
+  		  let email1=emailValidate();
+  		  let url=ValidURL();
+  		
+  		 if(url==false){
+			  meassage.push("enter valid email"); 
+				 document.getElementById("urlError").style.display='block'; 
+		  }else{  
+			  document.getElementById("urlError").style.display='none'; 
+		  } 
+  		  if(email1==false){
+			  meassage.push("enter valid email"); 
+		  }else{  
+			  document.getElementById("errors").style.display='none'; 
+			  document.getElementById("errors1").style.display='none'; 
+		  } 
+  		  
+  		  if(Number.value.trim().length<10){
+  			 meassage.push("enter valid email"); 
+  			 document.getElementById("numberErrors").style.display='block'; 
+  		 
+  		  }else{
+  			 document.getElementById("numberErrors").style.display='none';   
+  		  }
+  		  
+  		 if(zipCode.value.trim().length<5){
+  			 meassage.push("enter valid email"); 
+  			 document.getElementById("zipErrors").style.display='block'; 
+  		
+  		  }else{
+  			 document.getElementById("zipErrors").style.display='none';   
+  		  }
+  		
+  		  if(meassage.length>0){
+			  e.preventDefault();
+		  }
+  		  
+        });
+        
+        
+        function emailValidate(){
+        	 var emailRE1="^[^-,]+@gmail.com+$";
+             var emailRE2="^[^-,]+@hotmail.com+$";
+             var emailRE3="^[^-,]+@rediff.com+$";
+             var emailRE4="^[^-,]+@yahoo.com+$";
+             var emailRE5="^[^-,]+@outlook.com+$";
+             var emailRE6=/^([\w\-\.]+)@((\[([0-9]{1,3}\.){3}[0-9]{1,3}\])|(([\w\-]+\.)+)([a-zA-Z]{2,4}))$/;
+        	  
+        	  if(email.value.toLowerCase().match(emailRE1)||email.value.toLowerCase().match(emailRE2)||email.value.toLowerCase().match(emailRE3)||email.value.toLowerCase().match(emailRE4)||email.value.toLowerCase().match(emailRE5)){
+        		 document.getElementById("errors").style.display='block'; 
+      		  return false;
+      		  }else if(email.value.match(emailRE6)){
+      			  return true;  
+      		  }else{	
+      			 document.getElementById("errors1").style.display='block'; 
+      			 return false;
+      			 
+      		  }
+        	  
+          }  
+        
+        function ValidURL() {
+        	  var regex = /(http|https):\/\/(\w+:{0,1}\w*)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%!\-\/]))?/;
+        	  //[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)
+        	  if(!regex .test(companyWebsite.value)) {
+        	    return false;
+        	  } else {
+        	    return true;
+        	  }
+        	}
+        </script> 
+        
+        <script type="text/javascript">
+        
+        $("#zipCode").on("keypress", function (e) {
+            if ((!this.value.length && e.keyCode == 39) || (!this.value.length && e.keyCode == 32))
+                e.preventDefault();
+        })
+        
+           $("#address").on("keypress", function (e) {
+            if ((!this.value.length && e.keyCode == 39) || (!this.value.length && e.keyCode == 32))
+                e.preventDefault();
+        })
+        
+           $("#companyName").on("keypress", function (e) {
+            if ((!this.value.length && e.keyCode == 39) || (!this.value.length && e.keyCode == 32))
+                e.preventDefault();
+        })
+        
+           $("#companyWebsite").on("keypress", function (e) {
+            if ((!this.value.length && e.keyCode == 39) || (!this.value.length && e.keyCode == 32))
+                e.preventDefault();
+        })
+        
+        </script>
+        <!--**********************************
+            Footer start
+        ***********************************-->
+      
+        <div th:replace="common/header :: commonfooter"></div>
+        <!--**********************************
+            Footer end
+      
+        ***********************************-->
+ <div th:replace="common/header :: commonScript">
+</div>
+    </div>
+    <!--**********************************
+        Main wrapper end
+    ***********************************-->
+
+
+
+
+</body>
+
+</html>

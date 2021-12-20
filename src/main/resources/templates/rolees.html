@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="https://www.w3.org/1999/xhtml"
+	xmlns:th="https://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head th:replace="common/header :: commonheader">
+</head>
+
+<body>
+
+	<div th:replace="common/header :: commonDateandCollerPickerCss"></div>
+	<!--*******************
+        Preloader start
+    ********************-->
+	<div th:replace="common/header :: commonPreloader"></div>
+	<!--*******************
+        Preloader end
+    ********************-->
+
+
+	<!--**********************************
+        Main wrapper start
+    ***********************************-->
+	<div id="main-wrapper">
+
+		<!--**********************************
+            Nav header start
+        ***********************************-->
+		<div th:replace="common/header :: commonNavHeader"></div>
+		<!--**********************************
+            Nav header end
+        ***********************************-->
+
+		<!--**********************************
+            Header start
+        ***********************************-->
+		<div th:replace="common/header :: commonTopNav"></div>
+		<!--**********************************
+            Header end ti-comment-alt
+        ***********************************-->
+
+		<!--**********************************
+            Sidebar start
+        ***********************************-->
+		<div th:replace="common/header :: commonsidenav"></div>
+		<!--**********************************
+            Sidebar end
+        ***********************************-->
+
+
+		<!--**********************************
+            Content body start
+        ***********************************-->
+		<div class="content-body">
+			<!-- row -->
+			<div class="listOfRoles" id="listOfRoles">
+				<div class="container-fluid">
+					<div class="alert alert-success" role="alert"
+						th:if="${AddSuccess == 'Success'}">Candidate Added
+						successfully</div>
+
+					<div class="alert alert-success" role="alert"
+						th:if="${UpdateSuccess== 'success'}">Role Updated
+						successfully</div>
+					<div class="alert alert-success" role="alert"
+						th:if="${DeleteSuccess== 'Success'}">Record Deleted
+						Successfully</div>
+
+					<div class="alert alert-danger" role="alert"
+						th:if="${Addfailed == 'failed'}">
+						<span th:text="${message}"></span>
+					</div>
+					<div class="row">
+						<div class="col-12">
+							<div class="card">
+								<div class="card-body">
+									<div class="row">
+										<div class="col-10">
+											<h4 class="card-title">Roles</h4>
+
+										</div>
+										<div sec:authorize="hasAnyAuthority('SuperAdmin','Add Roles')" class="col-2">
+
+											<a th:href="@{'/roles/'+ ${userInfo.customerId}}"
+												class="btn btn-success">Add Role </a>
+										</div>
+									</div>
+									
+								
+
+
+									<div class="table-responsive">
+										<table
+											class="table table-striped table-bordered zero-configuration">
+											<thead>
+												<tr>
+													<th>Roles Name</th>
+													<th sec:authorize="hasAnyAuthority('SuperAdmin','Update Roles','Delete Roles')"	>Action</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr th:each="roles,custStat: ${userInfo.rolesInfos}">
+													<td style="text-transform: capitalize"
+														th:text="${roles.roleName}"></td>
+													<td sec:authorize="hasAnyAuthority('SuperAdmin','Update Roles','Delete Roles')"	>
+													<span> 
+													<a sec:authorize="hasAnyAuthority('SuperAdmin','Update Roles')"	 th:href="@{'/roles/updateRole/'+ ${roles.rolesId}}"
+															data-toggle="tooltip" data-placement="top" title=""
+															data-original-title="Edit"> <i
+																class="fa fa-pencil-square color-muted m-r-5"></i>
+														</a> <a sec:authorize="hasAnyAuthority('SuperAdmin','Delete Roles')"	 data-toggle="tooltip" data-placement="top" title=""
+															data-original-title="Delete">
+																<button type="button"
+																	style="border: none; background-color: transparent;"
+																	th:value="${roles.rolesId}"
+																	onclick="deleteEmployee(this.value)">
+																	<i class="fa fa-trash text-danger"></i>
+																</button>
+														</a>
+													</span></td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+
+
+			<!-- #/ container -->
+
+			<!--**********************************
+            Content body end
+        ***********************************-->
+
+
+			<script type="text/javascript">
+				function deleteEmployee(email) {
+					document.getElementById('listOfRoles').style.display = "none";
+					document.getElementById('DeleteRoles').style.display = "block";
+					document.getElementById("emailId").value = email;
+
+				}
+			</script>
+
+
+
+
+
+
+
+			<div class="DeleteRoles" id="DeleteRoles"
+				style="display: none; margin-top: 5%">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-12">
+							<div class="row">
+								<div class="col-3"></div>
+								<div class="col-6">
+									<div class="card">
+										<div class="card-body">
+											<h4 class="card-title text-danger">Delete</h4>
+
+											<div class="text-center">
+												<br> <br>
+												<h3 class="color-muted">Are you sure you want to delete
+													this record</h3>
+
+												<br> <br>
+
+											</div>
+
+											<form th:action="@{/roles/deleteRole}" method="post"
+												enctype="multipart/form-data">
+
+
+												<input type="hidden" id="emailId" name="emailId" value="">
+
+
+												<div class="form-group row">
+													<div class="col-lg-6">
+														<button type="submit" class="btn btn-danger"
+															style="float: right;">Yes</button>
+													</div>
+													<div class="col-lg-6 ">
+														<a th:href="@{/roles}" class="btn btn-secondary">No</a>
+													</div>
+												</div>
+
+											</form>
+										</div>
+
+									</div>
+
+								</div>
+								<div class="col-3"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--**********************************
+            Content body end
+        ***********************************-->
+
+
+		<!--**********************************
+            Footer start
+        ***********************************-->
+
+		<div th:replace="common/header :: commonfooter"></div>
+		<!--**********************************
+            Footer end
+      
+        ***********************************-->
+		<div th:replace="common/header :: commonScript"></div>
+
+
+
+		<div th:replace="common/header :: commonDatetimeAndColorPickerScript"></div>
+
+	</div>
+	<!--**********************************
+        Main wrapper end
+    ***********************************-->
+
+
+
+
+</body>
+
+</html>

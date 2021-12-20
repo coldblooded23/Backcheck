@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html class="h-100" lang="en" xmlns="https://www.w3.org/1999/xhtml"
+	xmlns:th="https://www.thymeleaf.org"  xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>BGC</title>
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <link href="css/style.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+</head>
+
+<body class="h-100">
+    
+    <!--*******************
+        Preloader start
+    ********************-->
+    <div id="preloader">
+        <div class="loader">
+            <svg class="circular" viewBox="25 25 50 50">
+                <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10" />
+            </svg>
+        </div>
+    </div>
+    <!--*******************
+        Preloader end
+    ********************-->
+
+    
+
+
+
+    <div class="login-form-bg h-100">
+        <div class="container h-100">
+            <div class="row justify-content-center h-100">
+                <div class="col-xl-6">
+                    <div class="form-input-content">
+                        <div class="card login-form mb-0">
+                            <div class="card-body pt-5">
+                                
+                                    <a class="text-center" href="#"> <h2>BGC</h2></a><br>
+                                   <div class="text-center"> <h4>Register</h4>
+                                   </div> 
+                                   
+                            	<div class="alert alert-success" role="alert" th:if="${Successfull == 'succcess'}"> Account Created Successfully And The Activation Link Sent To The Mail</div>
+					        
+					        	<div class="alert alert-danger" role="alert" th:if="${Failed == 'fail'}"> <span th:text="${FailedMessage}"></span></div>
+					        
+                                                          <div class="PassEqual" id="PassEqual" style="display: none;color:red">
+Password and confirm password needs to be same
+                  </div>
+                  
+        
+                                <form id="signForm" class="mt-5 mb-5 login-input" th:action="@{/signup}" th:object="${customer}" method="post">
+                                  <div class="form-group">
+                                    <div style="display: flex">
+                              		  <input type="text" class="form-control" th:field="*{companyName}" id="companyname" maxlength="200" placeholder="Company Name" required>
+                                		   <span class="text-danger">*</span>
+                                    </div>
+                                   </div>
+                                     <div class="form-group">
+                                        <div style="display: flex">
+                                          	<input type="text" class="form-control"  th:field="*{userDetailsInfo.FirstName}" maxlength="50" id="firstname" placeholder="First Name" onkeypress="return((event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122) || (event.charCode == 32) || (event.charCode == 39));" required>
+                                  			<span class="text-danger">*</span>
+                                       </div>
+                                    </div>
+                                     <div class="form-group">
+                                         <div style="display: flex">
+                                      
+                                        <input type="text" class="form-control" th:field="*{userDetailsInfo.LastName}" maxlength="50" id="lastname"   placeholder="Last Name" onkeypress="return((event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122) || (event.charCode == 32) || (event.charCode == 39));" required>
+                                   <span class="text-danger">*</span>
+                                    </div>
+                                        </div>
+                                    <div class="form-group">
+                                      <div style="display: flex">
+                                        <input type="text" class="form-control" maxlength="10" th:field="*{companyProfileInfo.contactNumber}" id="contactnumber" placeholder="Phone Number" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" required>
+                                    <span class="text-danger">*</span>
+                                    </div>
+                                                                              <div class="numberErrors" id="numberErrors" style="display: none;color:red">
+               number must contain 10 digits
+                  </div>
+                                    </div>
+                                    <div class="form-group">
+                                      <div style="display: flex">
+                                        <input type="email" class="form-control" th:field="*{companyProfileInfo.email}" id="email" placeholder="Email" required>
+                                     <span class="text-danger">*</span>
+                                        </div>
+                                             <div class="errors" id="errors" style="display: none;color:red">
+                gmail , hotmail, rediff, yahoo, outlook  email's are not accepted
+                  </div>
+                                    </div>
+                                    <div class="form-group">
+                                    <div style="display: flex">
+                                        <input type="password" class="form-control"th:field="*{userDetailsInfo.Password}" id="password" maxlength="16" placeholder="Password" required>
+                                              <span class="form-control-text mt-1"><i class="far fa-eye" id="togglePassword"></i></span>
+                                              <span class="text-danger">*</span>
+                </div>
+                                          <div class="PassLength" id="PassLength" style="display: none;color:red">
+Password must contain Minimum 6 and Maximum 16 characters
+                  </div>
+                  <div class="WrongPass" id="WrongPass" style="display: none;color:red">
+Password should contain at least one lowercase letter, one uppercase letter, one numeric digit, and one special character
+                  </div>
+                                    </div>
+                                      <div class="form-group">
+                                      <div style="display:flex">
+                                        <input type="password" class="form-control" placeholder="Confirm Password" id="confirmPassword"  maxlength="16" required>
+                                              <span class="form-control-text mt-1"><i class="far fa-eye" id="togglePassword1"></i></span>
+                                              <span class="text-danger">*</span>
+                </div>
+                                    </div>
+                                    <button type="submit" class="btn login-form__btn submit w-100">Sign Up</button>
+                                </form>
+                                    <p class="mt-5 login-form__footer">Have account ?<a th:href="@{/login}" class="text-primary">Sign in </a> now</p>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+    
+    const from =document.getElementById("signForm");
+    const firstName =document.getElementById("firstname");
+    const LastName =document.getElementById("lastname");
+    const companyName =document.getElementById("companyname");
+    const email =document.getElementById("email");
+    const phone =document.getElementById("contactnumber");
+    const password =document.getElementById("password");
+    const ConfirmPassword =document.getElementById("confirmPassword");
+    var emailRE1="^[^-,]+@gmail.com+$";
+    var emailRE2="^[^-,]+@hotmail.com+$";
+    var emailRE3="^[^-,]+@rediff.com+$";
+    var emailRE4="^[^-,]+@yahoo.com+$";
+    var emailRE5="^[^-,]+@outlook.com+$";
+    from.addEventListener('submit',(e)=>{
+		  let meassage=[];
+		  let pass1=passValidation();
+		  let email1=emailValidate();
+		  let minlength=6;
+		  let maxlength=16;
+		  
+		  
+		  if(password.value.length< minlength || password.value.length > maxlength){
+			  meassage.push("password length"); 
+			  document.getElementById("PassLength").style.display='block'; 
+  			
+		     console.log("password length")
+		    }else{
+		    	  document.getElementById("PassLength").style.display='none';                   				
+		    }
+		  
+		  if(pass1==false){
+			  meassage.push("alteast one upper case and one lowercase"); 
+		  }else{  
+			  document.getElementById("WrongPass").style.display='none'; 
+		  }
+		  
+		  if(password.value==ConfirmPassword.value){
+			  document.getElementById("PassEqual").style.display='none'; 
+		  }else{ 
+			  meassage.push("password length"); 
+			  document.getElementById("PassEqual").style.display='block'; 
+		  }
+		  
+		  if(email1==false){
+			  meassage.push("enter valid email"); 
+		  }else{  
+			  document.getElementById("errors").style.display='none'; 
+		  } 
+		  
+		  
+		  
+		  if(phone.value.trim().length<10){
+	  			 meassage.push("enter valid email"); 
+	  			 document.getElementById("numberErrors").style.display='block'; 
+	  		 
+	  		  }else{
+	  			 document.getElementById("numberErrors").style.display='none';   
+	  		  }
+		  
+		  if(meassage.length>0){
+			  e.preventDefault();
+		  }
+		  
+		  });
+    
+    
+    
+    
+    
+    
+    
+    function passValidation(){
+   var PassregularExpression  =/^(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
+    if(password.value.match(PassregularExpression)){
+			  return true;  
+		  }else{	
+			  document.getElementById("WrongPass").style.display='block'; 
+			  return false;
+		  }
+  	  
+    }
+    
+    function emailValidate(){
+  	  
+  	  if(email.value.toLowerCase().match(emailRE1)||email.value.toLowerCase().match(emailRE2)||email.value.toLowerCase().match(emailRE3)||email.value.toLowerCase().match(emailRE4)||email.value.toLowerCase().match(emailRE5)){
+  		 document.getElementById("errors").style.display='block'; 
+		  return false;
+		  }else{	
+			
+			  return true;
+		  }
+  	  
+    }  
+    </script>
+    
+    <script type="text/javascript">
+const togglePassword = document.querySelector('#togglePassword');
+const password2 = document.querySelector('#password');
+
+togglePassword.addEventListener('click', function (e) {
+    // toggle the type attribute
+    const type = password2.getAttribute('type') === 'password' ? 'text' : 'password';
+    password2.setAttribute('type', type);
+    // toggle the eye slash icon
+    this.classList.toggle('fa-eye-slash');
+});
+
+const togglePassword1 = document.querySelector('#togglePassword1');
+const password1 = document.querySelector('#confirmPassword');
+togglePassword1.addEventListener('click', function (e) {
+    // toggle the type attribute
+    const type = password1.getAttribute('type') === 'password' ? 'text' : 'password';
+    password1.setAttribute('type', type);
+    // toggle the eye slash icon
+    this.classList.toggle('fa-eye-slash');
+});
+
+</script>
+
+
+
+<script type="text/javascript">
+$(function() {
+    $('#firstname').on('keypress', function(e) {
+    
+        if (e.which == 32||e.which==39){
+            return false;
+        }
+    });
+});
+          
+          $(function() {
+              $('#lastname').on('keypress', function(e) {
+                  if (e.which == 32||e.which==39){
+                      return false;
+                  }
+              });
+          });   
+              $(function() {
+            	    $('#password').on('keypress', function(e) {
+            	    
+            	        if (e.which == 32||e.which==39){
+            	            return false;
+            	        }
+            	    });
+            	});
+              
+              $(function() {
+          	    $('#confirmPassword').on('keypress', function(e) {
+          	    
+          	        if (e.which == 32||e.which==39){
+          	            return false;
+          	        }
+          	    });
+          	});
+     
+          
+
+</script>
+    
+
+    <!--**********************************
+        Scripts
+    ***********************************-->
+    <script src="plugins/common/common.min.js"></script>
+    <script src="js/custom.min.js"></script>
+    <script src="js/settings.js"></script>
+    <script src="js/gleek.js"></script>
+    <script src="js/styleSwitcher.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+</body>
+</html>
+
+
+
+
+

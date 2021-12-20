@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="https://www.w3.org/1999/xhtml"
+	xmlns:th="https://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head th:replace="common/header :: commonheader">
+</head>
+
+<body>
+
+	<div th:replace="common/header :: commonDateandCollerPickerCss"></div>
+	<!--*******************
+        Preloader start
+    ********************-->
+	<div th:replace="common/header :: commonPreloader"></div>
+	<!--*******************
+        Preloader end
+    ********************-->
+
+
+	<!--**********************************
+        Main wrapper start
+    ***********************************-->
+	<div id="main-wrapper">
+
+		<!--**********************************
+            Nav header start
+        ***********************************-->
+		<div th:replace="common/header :: commonNavHeader"></div>
+		<!--**********************************
+            Nav header end
+        ***********************************-->
+
+		<!--**********************************
+            Header start
+        ***********************************-->
+		<div th:replace="common/header :: commonTopNav"></div>
+		<!--**********************************
+            Header end ti-comment-alt
+        ***********************************-->
+
+		<!--**********************************
+            Sidebar start
+        ***********************************-->
+		<div th:replace="common/header :: commonsidenav"></div>
+		<!--**********************************
+            Sidebar end
+        ***********************************-->
+
+
+		<!--**********************************
+            Content body start
+        ***********************************-->
+		<div class="content-body">
+			<!-- row -->
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-12">
+						<div class="card">
+							<div class="card-body">
+								<div class="row">
+								   <div class="col-lg-6">
+								     <div class="row">
+                                            <label class="col-lg-3 col-form-label" for="">First Name: 
+                                            </label>
+                                            <div class="col-form-label">
+                                            <span th:text="${candidate.firstName}"></span>
+                                            </div>
+                                        </div>
+								    </div>
+								        <div class="col-lg-6">
+								         <div class="row">
+								         <label class="col-lg-3 col-form-label" for="companyName">Last Name: 
+                                            </label>
+                                            <div class="col-form-label">
+                                              <span th:text="${candidate.lastName}"></span>
+                                            </div>
+                                            </div>
+								        </div>
+								           <div class="col-lg-6">
+								     <div class="row">
+                                            <label class="col-lg-3 col-form-label" for="">DOB: 
+                                            </label>
+                                            <div class="col-form-label">
+                                            <span th:text="${candidate.dOB}"></span>
+                                            </div>
+                                        </div>
+								    </div>
+								        <div class="col-lg-6">
+								         <div class="row">
+								         <label class="col-lg-3 col-form-label" for="companyName">Phone: 
+                                            </label>
+                                            <div class="col-form-label">
+                                              <span th:text="${candidate.phone}"></span>
+                                            </div>
+                                            </div>
+								        </div>
+								          <div class="col-lg-6">
+								         <div class="row">
+								         <label class="col-lg-3 col-form-label" for="companyName">Email: 
+                                            </label>
+                                            <div class="col-form-label">
+                                              <span th:text="${candidate.email}"></span>
+                                            </div>
+                                            </div>
+								        </div>
+								          <div class="col-lg-6">
+								         <div class="row">
+								         <label class="col-lg-3 col-form-label" for="companyName">User Name: 
+                                            </label>
+                                            <div class="col-form-label">
+                                              <span th:text="${candidate.defaultUserName}"></span>
+                                            </div>
+                                            </div>
+								        </div>
+								    <div class="col-lg-6">
+								     <div class="row">
+                                            <label class="col-lg-3 col-form-label" for="companyName">Gender: 
+                                            </label>
+                                            <div class="col-form-label">
+                                            <span th:text="${candidate.candidate_GeneralInfo.gender}"></span>
+                                            </div>
+                                        </div>
+								    </div>
+								        <div class="col-lg-6">
+								         <div class="row">
+								         <label class="col-lg-3 col-form-label" for="companyName">MaritalStatus: 
+                                            </label>
+                                            <div class="col-form-label">
+                                              <span th:text="${candidate.candidate_GeneralInfo.maritalStatus}"></span>
+                                            </div>
+                                            </div>
+								        </div>
+								        <div class="col-lg-6">
+								     <div class="row">
+                                            <label class="col-lg-3 col-form-label" for="companyName">Address: 
+                                            </label>
+                                            <div class="col-form-label">
+                                            <span th:text="${candidate.candidate_GeneralInfo.address}"></span>
+                                            </div>
+                                        </div>
+								    </div>
+								        <div class="col-lg-6">
+								         <div class="row">
+								         <label class="col-lg-3 col-form-label" for="companyName">City: 
+                                            </label>
+                                            <div class="col-form-label">
+                                              <span th:text="${candidate.candidate_GeneralInfo.city}"></span>
+                                            </div>
+                                            </div>
+								        </div> 
+								              <div class="col-lg-6">
+								     <div class="row">
+                                            <label class="col-lg-3 col-form-label">State: 
+                                            </label>
+                                            <div class="col-form-label">
+                                            <span th:text="${candidate.candidate_GeneralInfo.state}"></span>
+                                            </div>
+                                        </div>
+								    </div>
+								        <div class="col-lg-6">
+								         <div class="row">
+								         <label class="col-lg-3 col-form-label">Country: 
+                                            </label>
+                                            <div class="col-form-label">
+                                              <span th:text="${candidate.candidate_GeneralInfo.country}"></span>
+                                            </div>
+                                            </div>
+								        </div> 
+								         <div class="col-lg-6">
+								     <div class="row">
+                                            <label class="col-lg-3 col-form-label">Pincode: 
+                                            </label>
+                                            <div class="col-form-label">
+                                            <span th:text="${candidate.candidate_GeneralInfo.pincode}"></span>
+                                            </div>
+                                        </div>
+								    </div>
+								        <div class="col-lg-6">
+								         <div class="row">
+								         <label class="col-lg-3 col-form-label">SSN: 
+                                            </label>
+                                            <div class="col-form-label">
+                                            <form th:action="@{/verifySsnNumber}" method="post" enctype="multipart/form-data">
+                                             <input type="hidden" name="candidateId" id="candidateId" th:value="${candidate.candidateId}">
+                                            <input type="hidden" name="ssn" id="ssn" th:value="${candidate.candidate_GeneralInfo.ssn}" required="required">
+                                              <span th:text="${candidate.candidate_GeneralInfo.ssn}"></span>
+                                              
+                                              <input th:if="${candidate.ssn_StatusInfo.Status==null OR candidate.ssn_StatusInfo.Status == false }" type="submit" class="btn btn-success" value="Verify">
+                                               <span class="alert alert-success" th:if="${candidate.ssn_StatusInfo.Status} == true "> Verified</span>
+                                              <br><br>
+                                              <div th:if="${candidate.ssn_StatusInfo.Status} == false ">
+                                              <span class="alert alert-danger" >The given SSN number is not valid</span>
+                                              </div>
+                                              
+                                              
+                                              </form>
+                                            </div>
+                                            </div>
+								        </div> 
+								
+								</div>
+							</div>
+						</div>
+						<div class="col-12">
+							<div class="card">
+								<div class="card-body">
+									<div class="row">
+										<div class="col-12">
+
+											<div class="row">
+												<div class="col-10">
+													<h4 class="card-title">Experience List</h4>
+												</div>
+												<div class="col-2">
+
+													<button type="button" id="experienceViewButtom"
+														class="btn btn-primary">
+														<span class="fa fa-eye"> view</span>
+													</button>
+
+
+													<button type="button" style="display: none"
+														id="experienceHideButtom" class="btn btn-danger">
+														<span class="fa fa-eye-slash"> hide</span>
+													</button>
+
+												</div>
+
+											</div>
+										</div>
+
+									</div>
+									<div id="experienceTable" style="display: none">
+										<div class="table-responsive">
+											<table
+												class="table table-striped table-bordered zero-configuration">
+												<thead>
+													<tr>
+														<th>Company Name</th>
+														<th>Designation</th>
+														<th>Location</th>
+														<th>Joining Date</th>
+														<th>Last Working Date</th>
+
+													</tr>
+												</thead>
+												<tbody>
+													<tr
+														th:each="experience,custStat: ${candidate.candidate_ExperienceInfo}">
+														<td style="text-transform: capitalize"
+															th:text="${experience.companyName}"></td>
+														<td style="text-transform: capitalize"
+															th:text="${experience.designation}"></td>
+														<td style="text-transform: capitalize"
+															th:text="${experience.location}"></td>
+														<td th:text="${experience.joiningDate}"></td>
+														<td style="text-transform: capitalize"
+															th:text="${experience.lastWorkingDate}"></td>
+
+													</tr>
+												</tbody>
+
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-12">
+							<div class="card">
+								<div class="card-body">
+									<div class="row">
+										<div class="col-12">
+
+											<div class="row">
+												<div class="col-10">
+													<h4 class="card-title">Education List</h4>
+												</div>
+												<div class="col-2">
+
+													<button type="button" id="educationViewButtom"
+														class="btn btn-primary">
+														<span class="fa fa-eye"> view</span>
+													</button>
+
+
+													<button type="button" style="display: none"
+														id="educationHideButtom" class="btn btn-danger">
+														<span class="fa fa-eye-slash"> hide</span>
+													</button>
+
+												</div>
+
+											</div>
+										</div>
+
+									</div>
+									<div id="educationTable" style="display: none">
+										<div class="table-responsive">
+											<table
+												class="table table-striped table-bordered zero-configuration">
+												<thead>
+													<tr>
+														<th>Degree</th>
+														<th>Specialization</th>
+														<th>universityName</th>
+														<th>Passing Year</th>
+
+
+
+													</tr>
+												</thead>
+												<tbody>
+													<tr
+														th:each="education,custStat: ${candidate.candidate_EducationDetailsInfo}">
+														<td style="text-transform: capitalize"
+															th:text="${education.degree}"></td>
+														<td style="text-transform: capitalize"
+															th:text="${education.specialization}"></td>
+														<td style="text-transform: capitalize"
+															th:text="${education.universityName}"></td>
+														<td style="text-transform: capitalize"
+															th:text="${education.passingYear}"></td>
+
+													</tr>
+												</tbody>
+
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+
+						<div class="col-12">
+							<div class="card">
+								<div class="card-body">
+									<div class="row">
+										<div class="col-12">
+											<div class="row">
+												<div class="col-10">
+													<h4 class="card-title">Document List</h4>
+												</div>
+												<div class="col-2">
+
+													<button type="button" id="documentViewButtom"
+														class="btn btn-primary">
+														<span class="fa fa-eye"> view</span>
+													</button>
+
+
+													<button type="button" style="display: none"
+														id="documentHideButtom" class="btn btn-danger">
+														<span class="fa fa-eye-slash"> hide</span>
+													</button>
+
+												</div>
+
+											</div>
+										</div>
+
+									</div>
+									<div id="documentTable" style="display: none">
+										<div class="table-responsive">
+											<table
+												class="table table-striped table-bordered zero-configuration">
+												<thead>
+													<tr>
+														<th>Document Type</th>
+														<th>Document Name</th>
+														<th>View</th>
+
+													</tr>
+												</thead>
+												<tbody>
+													<tr
+														th:each="document,custStat: ${candidate.candidate_DocumentInfo}">
+														<td style="text-transform: capitalize"
+															th:text="${document.typeofDoc}"></td>
+														<td style="text-transform: capitalize"
+															th:text="${document.docName}"></td>
+														<td><a
+															th:href="@{'/downloadDocument/'+ ${document.documentId}}"
+															class="btn btn-success">Download</a></td>
+
+													</tr>
+												</tbody>
+
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+
+
+
+
+
+			<!-- #/ container -->
+
+			<!--**********************************
+            Content body end
+        ***********************************-->
+
+			<script type="text/javascript">
+document.getElementById("documentViewButtom").addEventListener("click", (e)=>{
+	document.getElementById("documentViewButtom").style.display='none';	
+	document.getElementById("documentHideButtom").style.display='block';	
+	document.getElementById("documentTable").style.display='block';	
+});  
+
+document.getElementById("documentHideButtom").addEventListener("click", (e)=>{
+	document.getElementById("documentViewButtom").style.display='block';	
+	document.getElementById("documentHideButtom").style.display='none';	
+	document.getElementById("documentTable").style.display='none';	
+});  
+
+
+document.getElementById("educationViewButtom").addEventListener("click", (e)=>{
+	document.getElementById("educationViewButtom").style.display='none';	
+	document.getElementById("educationHideButtom").style.display='block';	
+	document.getElementById("educationTable").style.display='block';	
+});  
+
+document.getElementById("educationHideButtom").addEventListener("click", (e)=>{
+	document.getElementById("educationViewButtom").style.display='block';	
+	document.getElementById("educationHideButtom").style.display='none';	
+	document.getElementById("educationTable").style.display='none';	
+});  
+
+
+document.getElementById("experienceViewButtom").addEventListener("click", (e)=>{
+	document.getElementById("experienceViewButtom").style.display='none';	
+	document.getElementById("experienceHideButtom").style.display='block';	
+	document.getElementById("experienceTable").style.display='block';	
+});  
+
+document.getElementById("experienceHideButtom").addEventListener("click", (e)=>{
+	document.getElementById("experienceViewButtom").style.display='block';	
+	document.getElementById("experienceHideButtom").style.display='none';	
+	document.getElementById("experienceTable").style.display='none';	
+});  
+</script>
+
+
+
+
+
+
+
+
+
+
+		</div>
+		<!--**********************************
+            Content body end
+        ***********************************-->
+
+
+		<!--**********************************
+            Footer start
+        ***********************************-->
+
+		<div th:replace="common/header :: commonfooter"></div>
+		<!--**********************************
+            Footer end
+      
+        ***********************************-->
+		<div th:replace="common/header :: commonScript"></div>
+
+
+
+		<div th:replace="common/header :: commonDatetimeAndColorPickerScript"></div>
+
+
+		<!--**********************************
+        Main wrapper end
+    ***********************************-->
+</body>
+
+</html>

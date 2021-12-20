@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="https://www.w3.org/1999/xhtml"
+	xmlns:th="https://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head th:replace="common/header :: commonheader">
+</head>
+
+<body>
+
+	<div th:replace="common/header :: commonDateandCollerPickerCss"></div>
+	<!--*******************
+        Preloader start
+    ********************-->
+	<div th:replace="common/header :: commonPreloader"></div>
+	<!--*******************
+        Preloader end
+    ********************-->
+
+
+	<!--**********************************
+        Main wrapper start
+    ***********************************-->
+	<div id="main-wrapper">
+
+		<!--**********************************
+            Nav header start
+        ***********************************-->
+		<div th:replace="common/header :: commonNavHeader"></div>
+		<!--**********************************
+            Nav header end
+        ***********************************-->
+
+		<!--**********************************
+            Header start
+        ***********************************-->
+		<div th:replace="common/header :: commonTopNav"></div>
+		<!--**********************************
+            Header end ti-comment-alt
+        ***********************************-->
+
+		<!--**********************************
+            Sidebar start
+        ***********************************-->
+		<div th:replace="common/header :: commonsidenav"></div>
+		<!--**********************************
+            Sidebar end
+        ***********************************-->
+
+
+        <!--**********************************
+            Content body start
+        ***********************************-->
+        <div class="content-body">
+        
+        
+	
+			<div class="container-fluid">
+			<div class="alert alert-success" role="alert"
+						th:if="${Updatefailed == 'failed'}">Role Updated
+						failed please try again</div>
+						
+					
+				<div class="card">
+					<div class="card-body">
+						<div class="form-validation">
+							<form id="candidateForm"
+								th:action="@{/roles/updateRoles}"
+								th:object="${roles}" method="post">
+								<div class="form-group row">
+									<input type="hidden" class="form-control" id="customerId"
+										name="customerId" th:field="*{customerId}"> 
+										<input type="hidden" class="form-control" id="rolesId"
+										name="rolesId" th:field="*{rolesId}"> <label
+										class="col-lg-4 col-form-label" for="email">Role Name <span
+										class="text-danger">*</span>
+									</label>
+									<div class="col-lg-6">
+										<input type="text" class="form-control"
+											th:field="*{roleName}" placeholder="ROLE NAME"
+											required="required">
+										
+									</div>
+								</div>
+	
+								
+								<div class="form-group">
+								<label
+										class="col-form-label" >Privileges <span
+										class="text-danger">*</span>
+									</label>
+									<br><br>
+									<div class="form-group row">
+								<th:block th:each="privi : ${ListOfprivilages}">
+										<div class="col-lg-4">
+											<ul>
+										
+								 <li>
+									<label class="css-control css-control-primary css-checkbox"
+										for="val-terms"> 
+										
+										<input type="checkbox"
+									th:field="*{privaleges}" 
+											th:value="${privi.privilegeId}" > 
+										<span class="css-control-indicator" th:text="${privi.privilegeName}"></span>
+						
+									</label>
+									</li>
+									</ul>
+								</div>
+								
+									</th:block>
+								
+									</div>
+								</div>
+
+
+							
+								<div class="form-group row">
+									<div class="col-lg-6">
+										<button type="submit" class="btn btn-primary"
+											style="float: right;">Update</button>
+									</div>
+									<div class="col-lg-6 ">
+										<a th:href="@{/roles}" class="btn btn-danger">Cancel</a>
+									</div>
+								</div>
+
+							</form>
+						</div>
+					</div>
+				</div>
+
+			</div>
+
+
+
+
+		</div>
+            <!-- #/ container -->
+        </div>
+        <!--**********************************
+            Content body end
+        ***********************************-->
+   
+
+		<!--**********************************
+          Script Starts
+        ***********************************-->
+    
+
+		<!--**********************************
+            Footer start
+        ***********************************-->
+
+		<div th:replace="common/header :: commonfooter"></div>
+		<!--**********************************
+            Footer end
+      
+        ***********************************-->
+		<div th:replace="common/header :: commonScript"></div>
+			<div th:replace="common/header :: commonDatetimeAndColorPickerScript"></div>
+	
+	<!--**********************************
+        Main wrapper end
+    ***********************************-->
+
+
+
+
+</body>
+
+</html>

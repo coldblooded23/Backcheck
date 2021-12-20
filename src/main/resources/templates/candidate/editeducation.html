@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html  lang="en"
+xmlns="https://www.w3.org/1999/xhtml"
+	xmlns:th="https://www.thymeleaf.org"  xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head th:replace="common/candidateheader :: commonheader">
+</head>
+
+<body>
+
+    <!--*******************
+        Preloader start
+    ********************-->
+    <div th:replace="common/candidateheader :: commonPreloader">
+</div>
+    <!--*******************
+        Preloader end
+    ********************-->
+
+    
+    <!--**********************************
+        Main wrapper start
+    ***********************************-->
+    <div id="main-wrapper">
+
+        <!--**********************************
+            Nav header start
+        ***********************************-->
+       <div th:replace="common/candidateheader :: commonNavHeader">
+</div>
+        <!--**********************************
+            Nav header end
+        ***********************************-->
+
+        <!--**********************************
+            Header start
+        ***********************************-->
+     <div th:replace="common/candidateheader :: commonTopNav"></div>
+        <!--**********************************
+            Header end ti-comment-alt
+        ***********************************-->
+
+        <!--**********************************
+            Sidebar start
+        ***********************************-->
+       <div th:replace="common/candidateheader :: commonsidenav"></div>
+        <!--**********************************
+            Sidebar end
+        ***********************************-->
+
+        <!--**********************************
+            Content body start
+        ***********************************-->
+        <div class="content-body">
+
+            <div class="container-fluid mt-3">
+    
+    
+            <div class="container-fluid">
+            <div class="alert alert-danger" role="alert" th:if="${updatefailed== 'failed'}"> <span th:text="${message}"></span></div>
+
+					<div class="card">
+						<div class="card-body">
+							<div class="form-validation">
+								<form id="employeeForm" th:action="@{/user/updateeducation}"
+									method="post">
+
+									<div class="form-group row">
+										<input type="hidden" class="form-control" id="candidateId"
+											name="candidateId" th:value="${education.candidateId}"
+											readonly="readonly"> <input type="hidden"
+											class="form-control" id="educationId" name="educationId"
+											th:value="${education.educationId}" readonly="readonly">
+										<label class="col-lg-4 col-form-label" for="degree">Degree
+											<span class="text-danger">*</span>
+										</label>
+										<div class="col-lg-6">
+											<input type="text" class="form-control" id="degree"
+												name="degree" placeholder="Degree" maxlength="250"
+												th:value="${education.degree}"
+												oninput="this.value = this.value.replace(/[^a-zA-Z.]/g, '').replace(/(\..*?)\..*/g, '$1');"
+												required="required">
+										</div>
+									</div>
+									<div class="form-group row">
+										<label class="col-lg-4 col-form-label" for="specialization">Specialization
+											<span class="text-danger">*</span>
+										</label>
+										<div class="col-lg-6">
+											<input type="text" class="form-control" id="specialization"
+												name="specialization" th:value="${education.specialization}"
+												placeholder="Specialization" maxlength="250"
+												oninput="this.value = this.value.replace(/[^a-zA-Z.]/g, '').replace(/(\..*?)\..*/g, '$1');"
+												required="required">
+										</div>
+									</div>
+									<div class="form-group row">
+										<label class="col-lg-4 col-form-label" for="passingYear">Passing
+											Year <span class="text-danger">*</span>
+										</label>
+										<div class="col-lg-6">
+											<input type="text" class="form-control" id="passingYear"
+												name="passingYear" th:value="${education.passingYear}"
+												placeholder="passingYear" maxlength="4"
+												oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
+												required="required">
+											<div class="numberErrors" id="numberErrors"
+												style="display: none; color: red">Enter Valid Year</div>
+											<div class="numberErrors2" id="numberErrors2"
+												style="display: none; color: red">Future Years cannot
+												be accepted</div>
+										</div>
+									</div>
+									<div class="form-group row">
+										<label class="col-lg-4 col-form-label" for="universityName">University
+											Name <span class="text-danger">*</span>
+										</label>
+										<div class="col-lg-6">
+											<input type="text" class="form-control"
+												placeholder="University Name" name="universityName"
+												th:value="${education.universityName}" maxlength="400"
+												id="universityName" required="required">
+
+										</div>
+
+									</div>
+									<div class="form-group row">
+										<div class="col-lg-6">
+											<button type="submit" class="btn btn-primary"
+												style="float: right;">Submit</button>
+										</div>
+										<div class="col-lg-6 ">
+											<a th:href="@{/user/edification}" class="btn btn-danger">Cancel</a>
+										</div>
+									</div>
+
+								</form>
+							</div>
+						</div>
+
+					</div>
+				</div>
+            
+         
+          
+            
+          
+          
+          
+          
+          
+  
+    
+      <script type="text/javascript">
+      
+      const from=document.getElementById("employeeForm"); 
+        const passingYear =document.getElementById("passingYear"); 
+         
+        
+        from.addEventListener('submit',(e)=>{
+        	let meassage=[];
+        	 var now = new Date;
+   		
+        	  if(passingYear.value.trim().length<4){
+       			 meassage.push("enter valid email"); 
+       			 document.getElementById("numberErrors").style.display='block'; 
+       		 
+       		  }else{
+       			 document.getElementById("numberErrors").style.display='none';   
+       		  }
+        	  if (passingYear.value > now.getFullYear()) 
+        	    {
+        		  meassage.push("enter valid email"); 
+        			 document.getElementById("numberErrors2").style.display='block'; 
+        	    }else{
+          			 document.getElementById("numberErrors2").style.display='none';   
+         		  }
+        	 
+  		  if(meassage.length>0){
+			  e.preventDefault();
+		  }
+        
+        
+        });
+        
+   
+
+   
+   
+        </script>
+   
+
+   
+   
+        
+         <script type="text/javascript">
+        
+        $("#passingYear").on("keypress", function (e) {
+            if ((!this.value.length && e.keyCode == 39) || (!this.value.length && e.keyCode == 32))
+                e.preventDefault();
+        })
+        
+           $("#degree").on("keypress", function (e) {
+            if ((!this.value.length && e.keyCode == 39) || (!this.value.length && e.keyCode == 32))
+                e.preventDefault();
+        })
+        
+           $("#specialization").on("keypress", function (e) {
+            if ((!this.value.length && e.keyCode == 39) || (!this.value.length && e.keyCode == 32))
+                e.preventDefault();
+        })
+        
+           $("#universityName").on("keypress", function (e) {
+            if ((!this.value.length && e.keyCode == 39) || (!this.value.length && e.keyCode == 32))
+                e.preventDefault();
+        })
+        
+   
+        </script>
+        
+        
+      
+ 
+</div>
+      
+       
+     
+
+       
+     
+     
+      
+   
+            <!-- #/ container -->
+        </div>
+        <!--**********************************
+            Content body end
+        ***********************************-->
+   
+   
+        <!--**********************************
+            Footer start
+        ***********************************-->
+      
+        <div th:replace="common/candidateheader :: commonfooter"></div>
+        <!--**********************************
+            Footer end
+      
+        ***********************************-->
+ <div th:replace="common/candidateheader :: commonScript">
+</div>
+    </div>
+    <!--**********************************
+        Main wrapper end
+    ***********************************-->
+
+
+
+
+</body>
+
+</html>

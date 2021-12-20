@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="https://www.w3.org/1999/xhtml"
+	xmlns:th="https://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head th:replace="common/header :: commonheader">
+</head>
+
+<body>
+
+	<div th:replace="common/header :: commonDateandCollerPickerCss"></div>
+	<!--*******************
+        Preloader start
+    ********************-->
+	<div th:replace="common/header :: commonPreloader"></div>
+	<!--*******************
+        Preloader end
+    ********************-->
+
+
+	<!--**********************************
+        Main wrapper start
+    ***********************************-->
+	<div id="main-wrapper">
+
+		<!--**********************************
+            Nav header start
+        ***********************************-->
+		<div th:replace="common/header :: commonNavHeader"></div>
+		<!--**********************************
+            Nav header end
+        ***********************************-->
+
+		<!--**********************************
+            Header start
+        ***********************************-->
+		<div th:replace="common/header :: commonTopNav"></div>
+		<!--**********************************
+            Header end ti-comment-alt
+        ***********************************-->
+
+		<!--**********************************
+            Sidebar start
+        ***********************************-->
+		<div th:replace="common/header :: commonsidenav"></div>
+		<!--**********************************
+            Sidebar end
+        ***********************************-->
+
+
+        <!--**********************************
+            Content body start
+        ***********************************-->
+        <div class="content-body">
+        
+        
+					        
+					        	<div class="alert alert-danger" role="alert" th:if="${updatefailed == 'failed'}"> <span th:text="${message}"></span></div>
+
+
+            <div class="container-fluid">
+            <div class="card">
+                          <div class="card-body">
+                                <div class="form-validation">
+                                    <form id="employeeForm" th:action="@{'/candidate/updateresume/'+${candidateId}}" method="post" enctype="multipart/form-data">
+                                             <div class="form-group row">
+                                            <label class="col-lg-4 col-form-label" for="file">Resume <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-lg-6">
+                                                <input type="file" class="form-control" id="file" name="file"   placeholder="Select file" accept=".docx,.pdf" required="required">
+                                                   </div>
+                                        </div>
+                                      <div  class="form-group row">
+                                            <div class="col-lg-6">
+                                                <button type="submit" class="btn btn-primary" style="float: right;">Upload</button>
+                                                
+                                            </div>
+                                             <div class="col-lg-6 ">
+                                               <a th:href="@{/candidate}" class="btn btn-danger">Cancel</a>
+                                            </div>
+                                        </div>
+                                       
+                                    </form>
+                                </div>
+                            </div>
+            
+            </div>
+           
+            
+            
+            
+            </div>
+            <!-- #/ container -->
+        </div>
+        <!--**********************************
+            Content body end
+        ***********************************-->
+   
+
+		<!--**********************************
+          Script Starts
+        ***********************************-->
+<!--         <script type="text/javascript">
+        const from =document.getElementById("employeeForm");
+        const zipCode =document.getElementById("zipCode"); 
+        const Number =document.getElementById("phone"); 
+        
+        from.addEventListener('submit',(e)=>{
+        	let meassage=[];
+       
+        	
+        	
+        	  if(Number.value.trim().length<10){
+       			 meassage.push("enter valid email"); 
+       			 document.getElementById("numberErrors").style.display='block'; 
+       		 
+       		  }else{
+       			 document.getElementById("numberErrors").style.display='none';   
+       		  }
+       		  
+        	
+        	
+        	
+        	
+       	 if(zipCode.value.trim().length<5){
+  			 meassage.push("enter valid email"); 
+  			 document.getElementById("zipErrors").style.display='block'; 
+  		
+  		  }else{
+  			 document.getElementById("zipErrors").style.display='none';   
+  		  }
+  
+  		  if(meassage.length>0){
+			  e.preventDefault();
+		  }
+        
+        
+        });
+        
+        
+        </script>
+	 -->
+	 <script type="text/javascript">
+    var uploadField = document.getElementById("file");
+    uploadField.onchange = function () {
+
+  if (this.files[0].name.length > 150) {
+                alert("File name is limited to 150 characters.");
+                this.value = "";
+   }
+        
+        var fileName = this.files[0].name.split('.');
+        var fileFormat = fileName[fileName.length - 1];
+        
+        //var validFileFormats = ["jpg", "jpeg", "png", "pdf", "PNG", "JPG", "PDF"];
+         var validFileFormats=["docx","pdf"];
+        var validationCount = 0;
+        for (var i = 0; i < validFileFormats.length; i++) {
+            if (validFileFormats[i] == fileFormat.toLowerCase()) {
+                validationCount++;
+                i = validFileFormats.length;
+            }
+        }
+        if (validationCount == 0) {
+            alert("File format should be .docx, .pdf");
+            this.value = "";
+        }
+
+ 
+
+        const fileSize = this.files[0].size / 1024 / 1024;
+        if (fileSize > 1) {
+            alert("Maximum file size allowed is 1MB, please try with different file.");
+            this.value = "";
+        }
+    };
+</script>
+
+		<!--**********************************
+            Footer start
+        ***********************************-->
+
+		<div th:replace="common/header :: commonfooter"></div>
+		<!--**********************************
+            Footer end
+      
+        ***********************************-->
+		<div th:replace="common/header :: commonScript"></div>
+	</div>
+		<div th:replace="common/header :: commonDatetimeAndColorPickerScript"></div>
+	
+	<!--**********************************
+        Main wrapper end
+    ***********************************-->
+
+
+
+
+</body>
+
+</html>

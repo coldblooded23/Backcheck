@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html  lang="en"
+xmlns="https://www.w3.org/1999/xhtml"
+	xmlns:th="https://www.thymeleaf.org"  xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head th:replace="common/candidateheader :: commonheader">
+</head>
+
+<body>
+
+    <!--*******************
+        Preloader start
+    ********************-->
+    <div th:replace="common/candidateheader :: commonPreloader">
+</div>
+    <!--*******************
+        Preloader end
+    ********************-->
+
+    
+    <!--**********************************
+        Main wrapper start
+    ***********************************-->
+    <div id="main-wrapper">
+
+        <!--**********************************
+            Nav header start
+        ***********************************-->
+       <div th:replace="common/candidateheader :: commonNavHeader">
+</div>
+        <!--**********************************
+            Nav header end
+        ***********************************-->
+
+        <!--**********************************
+            Header start
+        ***********************************-->
+     <div th:replace="common/candidateheader :: commonTopNav"></div>
+        <!--**********************************
+            Header end ti-comment-alt
+        ***********************************-->
+
+        <!--**********************************
+            Sidebar start
+        ***********************************-->
+       <div th:replace="common/candidateheader :: commonsidenav"></div>
+        <!--**********************************
+            Sidebar end
+        ***********************************-->
+
+        <!--**********************************
+            Content body start
+        ***********************************-->
+        <div class="content-body">
+
+            <div class="container-fluid mt-3">
+              
+       <div class="listOfEmployees" id="listOfEmployees">
+           <div class="container-fluid">
+          <div class="alert alert-success" role="alert" th:if="${AddSuccess == 'Success'}">Education Details Added successfully</div>
+		<div class="alert alert-danger" role="alert" th:if="${Addfailed == 'failed'}"> <span th:text="${message}"></span></div>
+     	<div class="alert alert-success" role="alert" th:if="${updateSuccess == 'Success'}">Education Details Updated successfully</div>
+	  	<div class="alert alert-success" role="alert" th:if="${DeleteSuccess == 'Success'}">Record Deleted successfully</div>
+	  
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                            <div class="row">
+                             <div class="col-10">
+                                <h4 class="card-title">Education Details</h4>
+                                
+                                </div>
+                               <div class="col-2">  
+                              <button type="button" id="addEmployee" class="btn btn-success"> Add Education</button>
+                                </div>
+                            </div>
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-bordered zero-configuration">
+                                        <thead>
+                                            <tr>
+                                                <th>Degree</th>
+                                                <th>specialization</th>
+                                                <th>passingYear</th>
+                                                <th>universityName</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr th:each="educationn,custStat: ${education.candidate_EducationDetailsInfo}">
+                                                <td style="text-transform:capitalize" th:text="${educationn.degree}"></td>
+                                                <td style="text-transform:capitalize" th:text="${educationn.specialization}" ></td>
+                                                <td th:text="${educationn.passingYear}"></td>
+                                               
+                                                <td style="text-transform:capitalize"  th:text="${educationn.universityName}"></td>
+                                                <td>
+                                                <span>
+                                                <a th:href="@{'/user/education_info/'+ ${educationn.educationId}}" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit">
+                                                <i class="fa fa-pencil-square color-muted m-r-5"></i> </a>
+                                                <a  data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete">
+                                               <button type="button" style="border: none; background-color: transparent;" th:value="${educationn.educationId}" onclick="deleteEmployee(this.value)"> <i class="fa fa-trash text-danger"></i></button>
+                                                </a>
+                                                </span>
+                                                </td>
+                                            </tr>    
+                                        </tbody>
+										<!-- <tfoot>
+												<tr>
+													<th>First Name</th>
+													<th>Last Name</th>
+													<th>Email</th>
+													<th>DOB</th>
+													<th>Designation</th>
+													<th>Action</th>
+												</tr>
+											</tfoot> -->
+										</table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+            
+            
+            <script type="text/javascript">
+            const myButton= document.getElementById('addEmployee');
+            
+            myButton.onclick = function() {
+            	document.getElementById('listOfEmployees').style.display="none";
+            	document.getElementById('AddEmployeeForm').style.display="block";
+            }
+            
+            
+            
+            </script>
+            
+            <div class="AddEmployeeForm" id="AddEmployeeForm" style="display: none">
+
+            <div class="container-fluid">
+            <div class="card">
+                          <div class="card-body">
+                                <div class="form-validation">
+                                    <form id="employeeForm" th:action="@{/user/education_info}" method="post">
+                                  
+                                        <div class="form-group row">
+                                          <input type="hidden" class="form-control" id="candidateId" name="candidateId"  th:value="${education.candidateId}" readonly="readonly" >
+                                            <label class="col-lg-4 col-form-label" for="degree">Degree <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-lg-6">
+                                                <input type="text" class="form-control" id="degree" name="degree" placeholder="Degree" maxlength="250"  oninput="this.value = this.value.replace(/[^a-zA-Z.]/g, '').replace(/(\..*?)\..*/g, '$1');"  required="required">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-lg-4 col-form-label" for="specialization">Specialization <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-lg-6">
+                                                <input type="text" class="form-control" id="specialization" name="specialization" placeholder="Specialization" maxlength="250"  oninput="this.value = this.value.replace(/[^a-zA-Z.]/g, '').replace(/(\..*?)\..*/g, '$1');" required="required">
+               </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-lg-4 col-form-label" for="passingYear">Passing Year <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-lg-6">
+                                                <input type="text" class="form-control" id="passingYear" name="passingYear" placeholder="passingYear"  maxlength="4"  oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" required="required" >
+                                                                  <div class="numberErrors" id="numberErrors" style="display: none;color:red">
+               Enter Valid Year
+                  </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-lg-4 col-form-label" for="universityName">University Name <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-lg-6">
+                                           <input type="text" class="form-control" placeholder="University Name" name="universityName" maxlength="400"  id="universityName" required="required" >
+											
+                                        </div>
+									
+                                    </div>
+                                        <div  class="form-group row">
+                                            <div class="col-lg-6">
+                                                <button type="submit" class="btn btn-primary" style="float: right;">Submit</button>
+                                            </div>
+                                             <div class="col-lg-6 ">
+                                               <a th:href="@{/user/education_info}" class="btn btn-danger">Cancel</a>
+                                            </div>
+                                        </div>
+                                       
+                                    </form>
+                                </div>
+                            </div>
+            
+            </div>
+            </div>
+            
+         
+          
+            
+            </div>
+          <!--   <div id="domainCompair" style="display: none">
+            
+        <input type="text" id="getCompairEmail" th:value="${#authentication.getPrincipal().getUsername()}">      
+            </div> -->
+            <!-- #/ container -->
+        
+        <!--**********************************
+            Content body end
+        ***********************************-->
+          <script type="text/javascript">
+        
+        function  deleteEmployee(email){
+        	document.getElementById('listOfEmployees').style.display="none";
+        	document.getElementById('DeleteEmployees').style.display="block";
+        document.getElementById("emailId").value=email;
+        	
+        	
+        }
+          
+          
+          </script>
+          
+          
+          
+          
+          
+      <script type="text/javascript">
+    
+        const passingYear =document.getElementById("passingYear"); 
+         
+        
+        from.addEventListener('submit',(e)=>{
+        	let meassage=[];
+   		
+  		
+  		  		
+        	
+        	  if(passingYear.value.trim().length<4){
+       			 meassage.push("enter valid email"); 
+       			 document.getElementById("numberErrors").style.display='block'; 
+       		 
+       		  }else{
+       			 document.getElementById("numberErrors").style.display='none';   
+       		  }
+  		  if(meassage.length>0){
+			  e.preventDefault();
+		  }
+        
+        
+        });
+        
+   
+
+   
+   
+        </script>
+        
+         <script type="text/javascript">
+        
+        $("#passingYear").on("keypress", function (e) {
+            if ((!this.value.length && e.keyCode == 39) || (!this.value.length && e.keyCode == 32))
+                e.preventDefault();
+        })
+        
+           $("#degree").on("keypress", function (e) {
+            if ((!this.value.length && e.keyCode == 39) || (!this.value.length && e.keyCode == 32))
+                e.preventDefault();
+        })
+        
+           $("#specialization").on("keypress", function (e) {
+            if ((!this.value.length && e.keyCode == 39) || (!this.value.length && e.keyCode == 32))
+                e.preventDefault();
+        })
+        
+           $("#universityName").on("keypress", function (e) {
+            if ((!this.value.length && e.keyCode == 39) || (!this.value.length && e.keyCode == 32))
+                e.preventDefault();
+        })
+        
+   
+        </script>
+        
+        
+      
+
+        
+          <div class="DeleteEmployees" id="DeleteEmployees" style="display: none;margin-top:5%">
+ <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                    
+                            <div class="row">
+                               <div class="col-3">
+                               </div>
+                             <div class="col-6">
+                             <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title text-danger">Delete</h4>
+                                
+                           <div class="text-center">
+                           <br>
+                           <br>
+                           
+                           <h3 class="color-muted">Are you sure you want to delete this record</h3>
+                           
+                            <br>
+                           <br>
+                          
+                           </div>     
+                           
+                           <form th:action="@{/user/education/delete}" method="post">
+                           
+                           
+                           <input type="hidden" id="emailId" name="emailId" value="">
+                           
+                           
+                                       <div  class="form-group row">
+                                            <div class="col-lg-6">
+                                                <button type="submit" class="btn btn-danger" style="float: right;">Yes</button>
+                                            </div>
+                                             <div class="col-lg-6 ">
+                                               <a th:href="@{/user/education_info}" class="btn btn-secondary">No</a>
+                                            </div>
+                                        </div>
+                                
+                               </form> 
+                                </div>
+                              
+                            </div>
+                           
+                            </div>
+                             <div class="col-3">
+                               </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>    
+</div>
+      
+       
+     
+
+       
+     
+     
+      
+   
+            <!-- #/ container -->
+        </div>
+        <!--**********************************
+            Content body end
+        ***********************************-->
+
+        <!--**********************************
+            Footer start
+        ***********************************-->
+      
+        <div th:replace="common/candidateheader :: commonfooter"></div>
+        <!--**********************************
+            Footer end
+      
+        ***********************************-->
+ <div th:replace="common/candidateheader :: commonScript">
+</div>
+    </div>
+    <!--**********************************
+        Main wrapper end
+    ***********************************-->
+
+
+
+
+</body>
+
+</html>

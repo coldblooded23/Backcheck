@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="https://www.w3.org/1999/xhtml"
+	xmlns:th="https://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head th:replace="common/candidateheader :: commonheader">
+</head>
+
+<body>
+
+	<!--*******************
+        Preloader start
+    ********************-->
+	<div th:replace="common/candidateheader :: commonPreloader"></div>
+	<!--*******************
+        Preloader end
+    ********************-->
+
+
+	<!--**********************************
+        Main wrapper start
+    ***********************************-->
+	<div id="main-wrapper">
+
+		<!--**********************************
+            Nav header start
+        ***********************************-->
+		<div th:replace="common/candidateheader :: commonNavHeader"></div>
+		<!--**********************************
+            Nav header end
+        ***********************************-->
+
+		<!--**********************************
+            Header start
+        ***********************************-->
+		<div th:replace="common/candidateheader :: commonTopNav"></div>
+		<!--**********************************
+            Header end ti-comment-alt
+        ***********************************-->
+
+		<!--**********************************
+            Sidebar start
+        ***********************************-->
+		<div th:replace="common/candidateheader :: commonsidenav"></div>
+		<!--**********************************
+            Sidebar end
+        ***********************************-->
+
+		<!--**********************************
+            Content body start
+        ***********************************-->
+		<div class="content-body">
+
+			<div class="container-fluid mt-3">
+
+
+				<div class="container-fluid">
+					<div class="alert alert-danger" role="alert"
+						th:if="${updatefailed== 'failed'}">
+						<span th:text="${message}"></span>
+					</div>
+
+					<div class="card">
+						<div class="card-body">
+							<div class="form-validation">
+								<form id="documentForm" th:action="@{/user/updateDocument}"
+									method="post" enctype="multipart/form-data">
+
+									<div class="form-group row">
+										<input type="hidden" class="form-control" id="candidateId"
+											name="candidateId" th:value="${document.candidateId} "
+											readonly="readonly"> <input type="hidden"
+											class="form-control" id="documentId" name="documentId"
+											th:value="${document.documentId} " readonly="readonly">
+
+										<label class="col-lg-4 col-form-label" for="docFile">Document
+											<span class="text-danger">*</span>
+										</label>
+										<div class="col-lg-6">
+											<input type="File" class="form-control" id="docFile"
+												name="docFile" placeholder="Document" required="required">
+										</div>
+									</div>
+									<div class="form-group row">
+										<label class="col-lg-4 col-form-label" for="typeofDoc">
+											Document Type<span class="text-danger">*</span>
+										</label>
+										<div class="col-lg-6">
+											<select class="form-control" id="typeofDoc" name="typeofDoc"
+												th:field="*{document.typeofDoc}">
+												<option value=" ">Select Document Type</option>
+												<option value="ssc">10th/SSC</option>
+												<option value="12th">12th/Inter</option>
+												<option value="degree">Degree/B-tech</option>
+												<option value="Masters">Masters</option>
+												<option value="aadhar">Aadhar</option>
+												<option value="Pan Card">Pan Card</option>
+												<option value="voter_id">Voter Id</option>
+												<option value="Others">Others</option>
+											</select>
+
+										</div>
+										<div class="numberErrors" id="numberErrors"
+												style="display: none; color: red">Please select one Document Type</div>
+									</div>
+
+
+									<div class="form-group row">
+										<div class="col-lg-6">
+											<button type="submit" class="btn btn-primary"
+												style="float: right;">Submit</button>
+										</div>
+										<div class="col-lg-6 ">
+											<a th:href="@{/user/documentInfo}" class="btn btn-danger">Cancel</a>
+										</div>
+									</div>
+
+								</form>
+							</div>
+						</div>
+
+					</div>
+				</div>
+
+
+
+				<script type="text/javascript">
+    var uploadField = document.getElementById("docFile");
+ 
+    
+    uploadField.onchange = function () {
+
+  if (this.files[0].name.length > 150) {
+                alert("File name is limited to 150 characters.");
+                this.value = "";
+   }
+        
+        var fileName = this.files[0].name.split('.');
+        var fileFormat = fileName[fileName.length - 1];
+        
+        var validFileFormats = ["jpg", "jpeg", "png", "pdf", "PNG", "JPG", "PDF","docx"];
+        // var validFileFormats=["docx","pdf"];
+        var validationCount = 0;
+        for (var i = 0; i < validFileFormats.length; i++) {
+            if (validFileFormats[i] == fileFormat.toLowerCase()) {
+                validationCount++;
+                i = validFileFormats.length;
+            }
+        }
+        if (validationCount == 0) {
+            alert("File format should be jpg, jpeg, png, pdf,docx");
+            this.value = "";
+        }
+
+ 
+
+        const fileSize = this.files[0].size / 1024 / 1024;
+        if (fileSize > 1) {
+            alert("Maximum file size allowed is 1MB, please try with different file.");
+            this.value = "";
+        }
+    };
+</script>
+
+
+
+
+
+	
+
+				<script type="text/javascript">
+        
+        $("#passingYear").on("keypress", function (e) {
+            if ((!this.value.length && e.keyCode == 39) || (!this.value.length && e.keyCode == 32))
+                e.preventDefault();
+        })
+        
+           $("#degree").on("keypress", function (e) {
+            if ((!this.value.length && e.keyCode == 39) || (!this.value.length && e.keyCode == 32))
+                e.preventDefault();
+        })
+        
+           $("#specialization").on("keypress", function (e) {
+            if ((!this.value.length && e.keyCode == 39) || (!this.value.length && e.keyCode == 32))
+                e.preventDefault();
+        })
+        
+           $("#universityName").on("keypress", function (e) {
+            if ((!this.value.length && e.keyCode == 39) || (!this.value.length && e.keyCode == 32))
+                e.preventDefault();
+        })
+        
+   
+        </script>
+
+
+
+
+			</div>
+
+
+
+
+
+
+
+
+
+			<!-- #/ container -->
+		</div>
+		<!--**********************************
+            Content body end
+        ***********************************-->
+
+
+		<!--**********************************
+            Footer start
+        ***********************************-->
+
+		<div th:replace="common/candidateheader :: commonfooter"></div>
+		<!--**********************************
+            Footer end
+      
+        ***********************************-->
+		<div th:replace="common/candidateheader :: commonScript"></div>
+	</div>
+	<!--**********************************
+        Main wrapper end
+    ***********************************-->
+
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,181 @@
+
+<!DOCTYPE html>
+<html class="h-100" lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BGC</title>
+<!-- Favicon icon -->
+<link rel="icon" type="image/png" sizes="16x16"
+	href="/images/favicon.png">
+<!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous"> -->
+<link href="/css/style.css" rel="stylesheet">
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
+	integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU"
+	crossorigin="anonymous">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+</head>
+
+<body class="h-100">
+
+	<!--*******************
+        Preloader start
+    ********************-->
+	<div id="preloader">
+		<div class="loader">
+			<svg class="circular" viewBox="25 25 50 50">
+                <circle class="path" cx="50" cy="50" r="20" fill="none"
+					stroke-width="3" stroke-miterlimit="10" />
+            </svg>
+		</div>
+	</div>
+
+
+	<div class="login-form-bg h-100">
+		<div class="container h-100">
+			<div class="row justify-content-center h-100">
+				<div class="col-xl-6">
+					<div class="form-input-content">
+						<div class="card login-form mb-0">
+							<div class="card-body pt-5">
+									<a class="text-center" href="#">
+										<h2>Forget UserName</h2>
+									</a> <br>
+									<div class="text-center"><h4></h4></div>
+							<!-- 		<div class="alert alert-success" role="alert"th:if="${Successfull == 'success'}">Email has sent successfully.</div>
+									<div class="alert alert-danger" role="alert"th:if="${failed == 'fail'}"><span th:text="${message}"></span></div>
+								 -->	
+											<div class="alert alert-primary" role="alert" th:text="${success}" th:if="${success}"></div>
+											<div class="alert alert-danger" role="alert" th:text="${error}" th:if="${error}"></div>
+									
+									<form class="mt-5 mb-5 login-input" role="form"
+										th:action="@{/user/forgotUsername}" method="post">
+										<div class="form-group">
+											<select class="form-control" name="customerId" id="customerId" required="required">
+												<option value="none">Select Company Name</option>
+												<option th:each="bgccust : ${customer}" th:value="${bgccust.customerId}"
+													th:text="${bgccust.companyName}"></option>
+											</select><small id="errorMsgCompany" class="form-text"></small>
+										</div>
+										<div class="form-group">
+											<input class="form-control" type="text" name="email"
+												id="email" placeholder="Email" required="required">
+												<small id="errorMsgEmail" class="form-text"></small>
+										</div>
+										<button type="submit" id="finalsubmit" class="btn login-form__btn submit w-100">Submit</button>
+									</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	
+	<script
+			src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+		<script src="/plugins/common/common.min.js"></script>
+		<script src="/js/custom.min.js"></script>
+		<script src="/js/settings.js"></script>
+		<script src="/js/gleek.js"></script>
+		<script src="/js/styleSwitcher.js"></script>
+	<script type="text/javascript">
+	
+	$(document).ready(function(){
+   
+	$("#errorMsgCompany").hide();
+	$("#errorMsgEmail").hide();
+	
+	
+	var comapanyError = true;
+	var emailError = true;
+	
+
+	$("#email").keyup(function() {
+		email_check();
+	});
+	function email_check() {
+		let email_val = $('#email').val().trim();
+		let emailregex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+		if (email_val == '' || email_val == null) 
+		{					
+    	 			$("#errorMsgEmail").show();
+    	 			$("#errorMsgEmail").html("Email cannot be empty.");
+    	 			$("#errorMsgEmail").css("color", "red");
+    	 			emailError = false;
+    	 			return false;
+    	 		}
+    	 		if (emailregex.test(email_val) == false) {
+    	 			$("#errorMsgEmail").show();
+    	 			$("#errorMsgEmail").html("Please provide a valid email address.");
+    	 			$("#errorMsgEmail").css("color", "red");
+    	 			emailError = false;
+    	 			return false;
+    	 		}
+    	 		if (email_val.length < 5 || email_val.length > 100) {
+    	 			$("#errorMsgEmail").show();
+    	 			$("#errorMsgEmail").html("Email must be in between 5 to 100 character.");
+    	 			$("#errorMsgEmail").css("color", "red");
+    	 		    emailError = false;
+    	 			return false;
+    	 		}
+    	 		else {
+    	 			$("#errorMsgEmail").hide();
+    	 			
+  	 			return true;
+    	 		}
+    	}
+	
+	
+	$("#finalsubmit").click(function() {
+	
+    	 		 comapanyError = true;
+				 emailError = true;
+				 
+				 var companyName = $('#customerId').find(":selected").val();			
+				 email_check();
+				 	
+				 
+    	       if (companyName =="none") {
+					$("#errorMsgCompany").show();
+    	 			$("#errorMsgCompany").html("Select company name.");
+    	 			$("#errorMsgCompany").css("color", "red");
+    	 			comapanyError = false
+					return false			
+				}
+				else{
+					$("#errorMsgCompany").hide();
+					
+				}					
+				
+				
+    	 		email_check();
+
+    	 		if(emailError == true){
+    	 			return true;
+    	 		}
+    	 		else {
+    	 			return false;
+    	 		}
+    	 		
+    	 		
+    	 	});
+ 
+	});
+	
+	</script>
+</body>
+</html>
+
+
+
+
+
